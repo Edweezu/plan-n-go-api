@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const NODE_ENV = require('./config').NODE_ENV
-
+const ErrorHandler = require('./error-handler')
 
 
 const app = express()
@@ -19,15 +19,8 @@ app.get('/', (req, res) => {
     res.json({ ok: true })
 })
 
-app.use(function errorHandler(error, req, res, next) {
-    let response
-    if (process.env.NODE_ENV === 'production') {
-        response = { error: { message: 'server error' } }
-    } else {
-        console.error(error)
-        response = { message: error.message, error }
-    }
-    res.status(500).json(response)
-})
+app.use(ErrorHandler)
+
+
 
 module.exports = app
