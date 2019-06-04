@@ -16,7 +16,7 @@ app.use(cors())
 app.use(helmet({hidePoweredBy: {setTo: 'bye'}}));
 
 app.get('/', (req, res) => {
-    res.send('Hello world!')
+    res.json({ ok: true })
 })
 
 app.use(function errorHandler(error, req, res, next) {
