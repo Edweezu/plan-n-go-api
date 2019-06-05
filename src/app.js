@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 app.use('/api/trip', TripRouter)
 // app.use('/api/trip', UsersRouter)
 
-app.use(ErrorHandler)
+// app.use(ErrorHandler)
 
 
 
