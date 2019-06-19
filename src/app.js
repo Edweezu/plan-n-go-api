@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/trip', TripRouter)
-// app.use('/api/trip', UsersRouter)
+// app.use('/api/users', UsersRouter)
 
 // app.use(ErrorHandler)
 

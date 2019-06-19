@@ -9,13 +9,12 @@ const TripService = require('./trip-service')
 
 
 TripRouter
-    // .route('/get-by-id/:trip-id')
-    .route('/:userName')
+    .route('/')
     .get((req, res, next) => {
         let db = req.app.get('db')
-        let { userName } = req.params
+        // let { userName } = req.params
 
-        console.log('usernameee', userName)
+        // console.log('usernameee', userName)
         
         return TripService.getAllTrips(db, userName)
             .then(trips => {

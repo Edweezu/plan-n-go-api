@@ -1,11 +1,20 @@
+const xss = require('xss')
+
 const TripService = {
-    getAllTrips (knex, username) {
+    getAllTrips (knex, user_id) {
         return knex
             .select('*')
             .from('trip')
-            .where('user_username', username)
+            .where('user_id', user_id)
 
     },
+
+    serializeTrip (trip) {
+        return {
+            id: trip.id,
+            trip_name: xss(trip.trip_name)
+        }
+    }
     
     // getById (knex, id) {
     //     return knex

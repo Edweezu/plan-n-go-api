@@ -1,7 +1,7 @@
 CREATE TABLE trip (
     id SERIAL PRIMARY KEY,
     trip_name TEXT NOT NULL,
-    user_username TEXT REFERENCES users(username) ON DELETE CASCADE NOT NULL
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE destinations (
