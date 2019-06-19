@@ -6,6 +6,7 @@ const helmet = require('helmet')
 const NODE_ENV = require('./config').NODE_ENV
 const ErrorHandler = require('./error-handler')
 const TripRouter = require('./trip/trip-router')
+const UsersRouter = require('./users/users-router')
 
 const app = express()
 
@@ -20,7 +21,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/trip', TripRouter)
-// app.use('/api/users', UsersRouter)
+app.use('/api/users', UsersRouter)
 
 // app.use(ErrorHandler)
 

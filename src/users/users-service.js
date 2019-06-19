@@ -6,12 +6,13 @@ const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*
 
 const UsersService = {
   //login methods
-  getUserWithUserName(db, user_name) {
-    return db('blogful_users')
-      .where({ user_name })
+  getUserWithUserName(db, username) {
+    return db('users')
+      .where({ username })
       .first()
   },
 
+  //compares a text pw with hashed password and returns boolean 
   comparePasswords(password, hash) {
     return bcrypt.compare(password, hash)
   },
@@ -19,7 +20,7 @@ const UsersService = {
   createJwt(subject, payload) {
     return jwt.sign(payload, config.JWT_SECRET, {
       subject,
-      expiresIn: config.JWT_EXPIRY,
+    //   expiresIn: config.JWT_EXPIRY,
       algorithm: 'HS256',
     })
   },
@@ -31,9 +32,9 @@ const UsersService = {
   },
 
   //registration methods
-  hasUserWithUserName(db, user_name) {
-    return db('blogful_users')
-      .where({ user_name })
+  hasUserWithUserName(db, username) {
+    return db('users')
+      .where({ username })
       .first()
       .then(user => !!user)
   },
@@ -41,7 +42,7 @@ const UsersService = {
   insertUser(db, newUser) {
     return db
       .insert(newUser)
-      .into('blogful_users')
+      .into('users')
       .returning('*')
       .then(([user]) => user)
   },
@@ -69,7 +70,7 @@ const UsersService = {
   serializeUser(user) {
     return {
       id: user.id,
-      user_name: xss(user.user_name)
+      username: xss(user.username)
     }
   },
 }
