@@ -5,6 +5,7 @@ const express = require('express')
 const UsersRouter = express.Router()
 const jsonParser = express.json()
 const UsersService = require('./users-service')
+const { requireAuth } = require('../middleware/jwt-auth')
 
 //similar to auth router folder
 UsersRouter
@@ -102,6 +103,13 @@ UsersRouter
 
 UsersRouter
     .route('/refresh')
+    .post(requireAuth, (req, res,) => {
+        const sub = req.user.user_name
+        const payload = { user_id: req.user.id }
+        res.send({
+            authToken: UsersService.createJwt(sub, payload),
+        })
+    })
 
 
 module.exports = UsersRouter

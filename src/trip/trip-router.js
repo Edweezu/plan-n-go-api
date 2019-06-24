@@ -6,33 +6,40 @@ const TripRouter = express.Router()
 const logger = require('../logger')
 const xss = require('xss')
 const TripService = require('./trip-service')
+const { requireAuth } = require('../middleware/jwt-auth')
+
+
 
 
 TripRouter
     .route('/')
-    .get((req, res, next) => {
+    .all(requireAuth)
+    .get((req, res) => {
         let db = req.app.get('db')
         // let { userName } = req.params
 
         // console.log('usernameee', userName)
+
+        console.log('reqqqq', req.user)
         
-        return TripService.getAllTrips(db, userName)
+        return TripService.getAllTrips(db, req.user.id)
             .then(trips => {
-                return res.status(200).json(
-                    trips.map((trip) => {
-                        return trip
-                    })
-                )
+                // return res.status(200).json(
+                //     trips.map((trip) => {
+                //         return trip
+                //     })
+                // )
+                // return res.status(200).json(trips.map((trip) => {
+                //     return TripService.serializeTrip(trip)
+                // }))
+                console.log('tripsss', trips)
+                res.json(trips.map(TripService.serializeTrip))
             })
 
-
-
-
-
     })
-    .post(bodyParser, (req, res, next) => {
-        //when you add a new trip on trip dashboard
-    })
+    // .post(bodyParser, (req, res, next) => {
+    //     //when you add a new trip on trip dashboard
+    // })
 
 
 TripRouter
