@@ -17,7 +17,7 @@ CREATE TABLE destinations (
     trip_id INTEGER REFERENCES trip(id) ON DELETE CASCADE NOT NULL
 );
 
-CREATE TABLE list (
+CREATE TABLE packing_list (
     id SERIAL PRIMARY KEY,
     item_name TEXT NOT NULL,
     list_notes TEXT,

@@ -69,8 +69,15 @@ TripRouter
     .route('/:tripid')
     .all(requireAuth)
     .get((req, res, next) => {
-        //gets all the components on the trips item page
-        //when the user clicks the trip on dashboard, redirect to trip item dashboard
+       //gets trip object from db
+        let db = req.app.get('db')
+        const { tripid } = req.params
+
+        return TripService.getTrip (db, tripid)
+            .then(trip => {
+                return res.json(TripService.serializeTrip(trip))
+            })
+        
     })
     .delete((req, res, next) => {
         //delete trip by id - trip dashboard
@@ -100,6 +107,17 @@ TripRouter
 TripRouter
     .route('/:tripid/flights')
     .all(requireAuth)
+    .get((req, res, next) => {
+        let db = req.app.get('db')
+        const { tripid } = req.params
+
+        return TripService.getFlights (db, tripid)
+            .then(flights => {
+                res.json(flights.map((flight) => {
+                    return TripService.serializeFlight(flight)
+                }))
+            })
+    })
     .post(bodyParser, (req, res, next) => {
         //adding a flight to the list and db
             //take the tripId from this.props.params
@@ -140,7 +158,7 @@ TripRouter
     })
 
 TripRouter
-    .route('/:tripId/flights/:flightId')
+    .route('/:tripid/flights/:flightId')
     .delete((req, res, next) => {
         //delete specific trip on list
         //get flightId from the key
@@ -149,8 +167,35 @@ TripRouter
         //edit
     })
 
+TripRouter
+    .route('/:tripid/destinations')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        let db = req.app.get('db')
+        const { tripid } = req.params
 
+        return TripService.getDestinations (db, tripid)
+            .then(destinations => {
+                res.json(destinations.map((destination) => {
+                    return TripService.serializeDestination(destination)
+                }))
+            })
+    })
 
+TripRouter
+    .route('/:tripid/packing_list')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        let db = req.app.get('db')
+        const { tripid } = req.params
+
+        return TripService.getList (db, tripid)
+            .then(list => {
+                res.json(list.map((item) => {
+                    return TripService.serializeList(item)
+                }))
+            })
+})
 
 
 

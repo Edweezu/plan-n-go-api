@@ -17,7 +17,7 @@ INSERT INTO flights (airline, flight_num, depart_date, depart_time, seats, fligh
     'Delta', null, '2019-08-15', '13:00', '30C', 'New York Notes', 3
 );
 
-INSERT INTO list (item_name, list_notes, trip_id) VALUES 
+INSERT INTO packing_list (item_name, list_notes, trip_id) VALUES 
 ('toothpaste', 'dont forget', 1),
 ('ibuprofen', 'dont get sick', 2),
 ('Inhaler', 'very important', 3);
