@@ -17,15 +17,11 @@ TripRouter
     .all(requireAuth)
     .get((req, res) => {
         let db = req.app.get('db')
-        // let { userName } = req.params
-
-        // console.log('usernameee', userName)
 
         console.log('reqqqq', req.user)
         
         return TripService.getAllTrips(db, req.user.id)
             .then(trips => {
-                console.log('tripsss', trips)
                 res.json(trips.map((trip) => {
                     return TripService.serializeTrip(trip)
                 }))
@@ -41,10 +37,8 @@ TripRouter
 
         const newTrip = { 
             city,
-            // trip_name,
             start_date,
             end_date,
-            // notes
         }
 
         for (const [key, value] of Object.entries(newTrip))
@@ -104,10 +98,45 @@ TripRouter
     })
 
 TripRouter
-    .route('/:tripId/flights')
+    .route('/:tripid/flights')
+    .all(requireAuth)
     .post(bodyParser, (req, res, next) => {
         //adding a flight to the list and db
             //take the tripId from this.props.params
+            let db = req.app.get('db')
+            let { tripid } = req.params
+
+            const { airline, flight_num, depart_date, depart_time, seats, flight_notes } = req.body
+
+            const newFlight = { 
+                airline,
+                depart_date
+            }
+
+            for (const [key, value] of Object.entries(newFlight))
+            if (value == null)
+            return res.status(400).json({
+                error: `Missing '${key}' in request body`
+            })
+
+
+            newFlight.flight_num = flight_num
+            newFlight.depart_time = depart_time
+            newFlight.seats = seats
+            newFlight.flight_notes = flight_notes
+            newFlight.trip_id = tripid
+
+            console.log('new trippp', newFlight)
+
+            return TripService.addFlight (db, newFlight)
+                .then(flight => {
+                    console.log('server flight', flight)
+                    return res.status(201)
+                        .location(path.posix.join(req.originalUrl, `/${flight.id}`))
+                        .json(TripService.serializeFlight(flight))
+                })
+                .catch(next)
+
     })
 
 TripRouter

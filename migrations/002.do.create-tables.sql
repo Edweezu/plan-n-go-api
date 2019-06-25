@@ -26,12 +26,11 @@ CREATE TABLE list (
 
 CREATE TABLE flights (
     id SERIAL PRIMARY KEY,
-    airline TEXT,
+    airline TEXT NOT NULL,
     flight_num INT,
-    depart_date DATE,
+    depart_date DATE NOT NULL,
     depart_time TIME,
-    arrival_date DATE,
-    arrival_time TIME,
+    seats TEXT,
     flight_notes TEXT,
     unix_time INT,
     trip_id INTEGER REFERENCES trip(id) ON DELETE CASCADE NOT NULL

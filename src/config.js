@@ -4,5 +4,5 @@ module.exports = {
     DB_URL: process.env.DATABASE_URL || 
     'postgresql://dunder-mifflin@localhost/plan-db',
     JWT_SECRET: process.env.JWT_SECRET || 'change-this-secret',
-    JWT_EXPIRY: process.env.JWT_EXPIRY || '45m'
+    JWT_EXPIRY: process.env.JWT_EXPIRY || '3h'
 }

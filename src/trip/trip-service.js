@@ -14,8 +14,8 @@ const TripService = {
             id: trip.id,
             trip_name: xss(trip.trip_name),
             city: xss(trip.city),
-            start_date: xss(trip.start_date),
-            end_date: xss(trip.end_date),
+            start_date: trip.start_date,
+            end_date: trip.end_date,
             notes: xss(trip.notes)
         }
     },
@@ -43,6 +43,28 @@ const TripService = {
             .from('trip')
             .where('id', id)
             .delete()
+    },
+
+    addFlight (knex, newFlight) {
+        return knex
+            .from('flights')
+            .insert(newFlight)
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+    },
+
+    serializeFlight (flight) {
+        return {
+            id: flight.id,
+            airline: xss(flight.airline),
+            flight_num: flight.flight_num,
+            depart_date: flight.depart_date,
+            depart_time: flight.depart_time,
+            seats: xss(flight.seats),
+            flight_notes: xss(flight.flight_notes)
+        }
     },
 
     // updateNote (knex, id, newData) {

@@ -6,15 +6,15 @@ INSERT INTO trip (trip_name, city, start_date, end_date, notes, user_id) VALUES
 ('New York', 'New York', '2019-08-15', '2019-08-21', 'Bring a jacket to NY', 2)
 ;
 
-INSERT INTO flights (airline, flight_num, depart_date, depart_time, arrival_date, arrival_time, flight_notes, trip_id) VALUES 
+INSERT INTO flights (airline, flight_num, depart_date, depart_time, seats, flight_notes, trip_id) VALUES 
 (
-    'United', 123, '2019-06-20', '07:00', '2019-06-22', '10:00', 'LA Notes', 1
+    'United', 123, '2019-06-20', '07:00', '46A', 'LA Notes', 1
 ),
 (
-    'Southwest', 234, '2019-07-20', '08:00', '2019-06-22', '10:00', 'SF Notes', 2
+    'Southwest', 234, '2019-07-20', '08:00', '32B', 'SF Notes', 2
 ),
 (
-    'Delta', null, '2019-08-15', '13:00', '2019-08-16', '11:00', 'New York Notes', 3
+    'Delta', null, '2019-08-15', '13:00', '30C', 'New York Notes', 3
 );
 
 INSERT INTO list (item_name, list_notes, trip_id) VALUES 
