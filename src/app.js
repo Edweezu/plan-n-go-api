@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
     res.json({ ok: true })
 })
 
-app.use('/api/trip', TripRouter)
+app.use('/api/trips', TripRouter)
 app.use('/api/users', UsersRouter)
 
 // app.use(ErrorHandler)

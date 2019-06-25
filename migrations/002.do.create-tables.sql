@@ -1,6 +1,10 @@
 CREATE TABLE trip (
     id SERIAL PRIMARY KEY,
     trip_name TEXT NOT NULL,
+    city TEXT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    notes TEXT,
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL
 );
 

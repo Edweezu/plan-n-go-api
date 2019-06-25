@@ -12,34 +12,38 @@ const TripService = {
     serializeTrip (trip) {
         return {
             id: trip.id,
-            trip_name: xss(trip.trip_name)
+            trip_name: xss(trip.trip_name),
+            city: xss(trip.city),
+            start_date: xss(trip.start_date),
+            end_date: xss(trip.end_date),
+            notes: xss(trip.notes)
         }
-    }
+    },
     
-    // getById (knex, id) {
-    //     return knex
-    //         .select('*')
-    //         .from('notes')
-    //         .where('id', id)
-    //         .first()
-    // },
+    getById (knex, id) {
+        return knex
+            .select('*')
+            .from('trip')
+            .where('id', id)
+            .first()
+    },
 
-    // addNote (knex, newNote) {
-    //     return knex
-    //         .from('notes')
-    //         .insert(newNote)
-    //         .returning('*')
-    //         .then(rows => {
-    //             return rows[0]
-    //         })
-    // },
+    addTrip (knex, newTrip) {
+        return knex
+            .from('trip')
+            .insert(newTrip)
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+    },
 
-    // deleteNote (knex, id) {
-    //     return knex
-    //         .from('notes')
-    //         .where('id', id)
-    //         .delete()
-    // },
+    deleteTrip (knex, id) {
+        return knex
+            .from('trip')
+            .where('id', id)
+            .delete()
+    },
 
     // updateNote (knex, id, newData) {
     //     return knex
