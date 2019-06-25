@@ -58,6 +58,8 @@ TripRouter
         newTrip.notes = notes
         newTrip.user_id = req.user.id
 
+        console.log('new trippp', newTrip)
+
         return TripService.addTrip (db, newTrip)
             .then(trip => {
                 console.log('server trippp', trip)
