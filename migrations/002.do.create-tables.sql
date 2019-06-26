@@ -29,7 +29,7 @@ CREATE TABLE flights (
     airline TEXT NOT NULL,
     flight_num INT,
     depart_date DATE NOT NULL,
-    depart_time TIME,
+    depart_time TIME ,
     seats TEXT,
     flight_notes TEXT,
     unix_time INT,

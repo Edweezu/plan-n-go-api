@@ -63,7 +63,8 @@ const TripService = {
             depart_date: flight.depart_date,
             depart_time: flight.depart_time,
             seats: xss(flight.seats),
-            flight_notes: xss(flight.flight_notes)
+            flight_notes: xss(flight.flight_notes),
+            trip_id: flight.trip_id
         }
     },
     
@@ -73,14 +74,16 @@ const TripService = {
             destination_name: xss(destination.destination_name),
             destination_date: destination.destination_date,
             address: xss(destination.address),
-            destination_notes: xss(destination.destination_notes)
+            destination_notes: xss(destination.destination_notes),
+            trip_id: destination.trip_id
         }
     },
     serializeList (item) {
         return {
             id: item.id,
             item_name: xss(item.item_name),  
-            list_notes: xss(item.list_notes)
+            list_notes: xss(item.list_notes),
+            trip_id: item.trip_id
         }
     },
 

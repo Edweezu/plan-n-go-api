@@ -137,14 +137,18 @@ TripRouter
                 error: `Missing '${key}' in request body`
             })
 
-
             newFlight.flight_num = flight_num
             newFlight.depart_time = depart_time
             newFlight.seats = seats
             newFlight.flight_notes = flight_notes
             newFlight.trip_id = tripid
 
-            console.log('new trippp', newFlight)
+            if (depart_time || flight_num == '') {
+                newFlight.depart_time = null
+                newFlight.flight_num = null
+            }
+
+            console.log('new flightt', newFlight)
 
             return TripService.addFlight (db, newFlight)
                 .then(flight => {
@@ -159,6 +163,7 @@ TripRouter
 
 TripRouter
     .route('/:tripid/flights/:flightId')
+    .all(requireAuth)
     .delete((req, res, next) => {
         //delete specific trip on list
         //get flightId from the key
