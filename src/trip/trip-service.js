@@ -94,6 +94,14 @@ const TripService = {
             .first()
     },
 
+    getFlightById (knex, id) {
+        return knex
+            .select('*')
+            .from('flights')
+            .where('id', id)
+            .first()
+    },
+
     getFlights (knex, trip_id) {
         return knex
             .select('*')
@@ -115,16 +123,16 @@ const TripService = {
             .where('trip_id', trip_id)
     },
 
-    // updateNote (knex, id, newData) {
-    //     return knex
-    //         .from('notes')
-    //         .where('id', id)
-    //         .update(newData)
-    //         .returning('*')
-    //         .then(rows => {
-    //             return rows[0]
-    //         })
-    // }
+    updateFlight (knex, id, newData) {
+        return knex
+            .from('flights')
+            .where('id', id)
+            .update(newData)
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+    }
 
 }
 
