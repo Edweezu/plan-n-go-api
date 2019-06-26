@@ -247,6 +247,39 @@ TripRouter
                 }))
             })
     })
+    .post(bodyParser, (req, res, next) => {
+        let db = req.app.get('db')
+        let { tripid } = req.params
+
+        const { destination_name, destination_date, address, destination_notes } = req.body
+
+        const newDestination = { 
+           destination_name
+        }
+
+        for (const [key, value] of Object.entries(newDestination))
+        if (value == null)
+        return res.status(400).json({
+            error: `Missing '${key}' in request body`
+        })
+
+        newDestination.destination_date = destination_date
+        newDestination.address = address
+        newDestination.destination_notes = destination_notes
+        newDestination.trip_id = tripid
+
+
+        console.log('new Destinationnn', newDestination)
+
+        return TripService.addDestination (db, newDestination)
+            .then(destination => {
+                console.log('server destination', destination)
+                return res.status(201)
+                    .location(path.posix.join(req.originalUrl, `/${destination.id}`))
+                    .json(TripService.serializeDestination(destination))
+            })
+            .catch(next)
+    })
 
 TripRouter
     .route('/:tripid/packing_list')

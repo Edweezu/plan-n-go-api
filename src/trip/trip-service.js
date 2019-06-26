@@ -55,6 +55,16 @@ const TripService = {
             })
     },
 
+    addDestination (knex, newDestination) {
+        return knex
+            .from('destinations')
+            .insert(newDestination)
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+    },
+
     serializeFlight (flight) {
         return {
             id: flight.id,
