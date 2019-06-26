@@ -234,6 +234,71 @@ TripRouter
     })
 
 TripRouter
+    .route('/:tripid/destinations/:destinationid')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        let db = req.app.get('db')
+        const { tripid, destinationid } = req.params
+
+        return TripService.getDestinationById (db, destinationid)
+            .then(destination => {
+                res.json(TripService.serializeDestination(destination))
+            })
+            .catch(next)
+
+    })
+    .delete((req, res, next) => {
+        //delete specific trip on list
+        //get destinationid from the key
+        let db = req.app.get('db')
+        const { tripid, destinationid } = req.params
+
+        return TripService.getDestinationById (db, destinationid)
+        .then(destination => {
+            if (!destination) {
+                return res.status(404).send(`Please request a valid destination id.`)
+            }
+            return TripService.deleteDestination (db, destinationid)
+                .then(data => {
+                    logger.info(`flight id ${destinationid} was deleted.`)
+                    return res.status(204).end()
+                })
+                .catch(next)
+        })
+        .catch(next)
+    })
+    .patch(bodyParser, (req, res, next) => {
+        //edit
+        let db = req.app.get('db')
+        const { id, destination_name, destination_date, address, destination_notes, trip_id } = req.body
+
+        const updatedDestination = {
+            destination_name,
+            destination_date
+        }
+
+        for (const [key, value] of Object.entries(updatedDestination))
+        if (value == null)
+        return res.status(400).json({
+            error: `Missing '${key}' in request body`
+        })
+
+        updatedDestination.id = id
+        updatedDestination.address = address
+        updatedDestination.destination_notes = destination_notes
+        updatedDestination.trip_id = trip_id
+
+        console.log('updated destinationnn', updatedDestination)
+       
+        return TripService.updateDestination(db, id, updatedDestination)
+            .then(destination => {
+                console.log('server destinationnn', destination)
+                return res.status(204).end()
+            })
+            .catch(next)
+    })
+
+TripRouter
     .route('/:tripid/destinations')
     .all(requireAuth)
     .get((req, res, next) => {
@@ -251,10 +316,11 @@ TripRouter
         let db = req.app.get('db')
         let { tripid } = req.params
 
-        const { destination_name, destination_date, address, destination_notes } = req.body
+        let { destination_name, destination_date, address, destination_notes } = req.body
 
-        const newDestination = { 
-           destination_name
+        let newDestination = { 
+           destination_name,
+           destination_date
         }
 
         for (const [key, value] of Object.entries(newDestination))
@@ -263,11 +329,9 @@ TripRouter
             error: `Missing '${key}' in request body`
         })
 
-        newDestination.destination_date = destination_date
         newDestination.address = address
         newDestination.destination_notes = destination_notes
         newDestination.trip_id = tripid
-
 
         console.log('new Destinationnn', newDestination)
 

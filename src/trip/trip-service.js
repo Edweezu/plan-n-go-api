@@ -112,6 +112,14 @@ const TripService = {
             .first()
     },
 
+    getDestinationById (knex, id) {
+        return knex
+            .select('*')
+            .from('destinations')
+            .where('id', id)
+            .first()
+    },
+
     getFlights (knex, trip_id) {
         return knex
             .select('*')
@@ -144,9 +152,27 @@ const TripService = {
             })
     },
 
+    updateDestination (knex, id, newData) {
+        return knex
+            .from('destinations')
+            .where('id', id)
+            .update(newData)
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+    },
+
     deleteFlight (knex, id) {
         return knex
             .from('flights')
+            .where('id', id)
+            .delete()
+    },
+
+    deleteDestination (knex, id) {
+        return knex
+            .from('destinations')
             .where('id', id)
             .delete()
     },
