@@ -178,6 +178,22 @@ TripRouter
     .delete((req, res, next) => {
         //delete specific trip on list
         //get flightId from the key
+        let db = req.app.get('db')
+        const { tripid, flightid } = req.params
+
+        return TripService.getFlightById (db, flightid)
+        .then(flight => {
+            if (!flight) {
+                return res.status(404).send(`Please request a valid flight id.`)
+            }
+            return TripService.deleteFlight (db, flightid)
+                .then(data => {
+                    logger.info(`flight id ${flightid} was deleted.`)
+                    return res.status(204).end()
+                })
+                .catch(next)
+        })
+        .catch(next)
     })
     .patch(bodyParser, (req, res, next) => {
         //edit

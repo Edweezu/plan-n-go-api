@@ -132,7 +132,15 @@ const TripService = {
             .then(rows => {
                 return rows[0]
             })
-    }
+    },
+
+    deleteFlight (knex, id) {
+        return knex
+            .from('flights')
+            .where('id', id)
+            .delete()
+    },
+
 
 }
 
