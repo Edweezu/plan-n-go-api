@@ -21,6 +21,7 @@ CREATE TABLE packing_list (
     id SERIAL PRIMARY KEY,
     item_name TEXT NOT NULL,
     list_notes TEXT,
+    checked BOOLEAN,
     trip_id INTEGER REFERENCES trip(id) ON DELETE CASCADE NOT NULL
 );
 

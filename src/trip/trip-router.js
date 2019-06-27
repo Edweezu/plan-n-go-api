@@ -358,9 +358,60 @@ TripRouter
                     return TripService.serializeList(item)
                 }))
             })
-})
+    })
+    .post(bodyParser, (req, res, next) => {
+        let db = req.app.get('db')
+        let { tripid } = req.params
 
+        let { item_name, list_notes, checked } = req.body
 
+        let newItem = { 
+           item_name
+        }
+
+        for (const [key, value] of Object.entries(newItem))
+        if (value == null)
+        return res.status(400).json({
+            error: `Missing '${key}' in request body`
+        })
+
+        newItem.list_notes = list_notes
+        newItem.checked = checked
+        newItem.trip_id = tripid
+
+        console.log('new packing itemmmm', newItem)
+
+        return TripService.addPackingItem (db, newItem)
+            .then(item => {
+                console.log('server destination', item)
+                return res.status(201)
+                    .location(path.posix.join(req.originalUrl, `/${item.id}`))
+                    .json(TripService.serializeList(item))
+            })
+            .catch(next)
+    })
+
+    TripRouter
+    .route('/:tripid/packing_list/:itemid')
+    .all(requireAuth)
+    .delete((req, res, next) => {
+        let db = req.app.get('db')
+        const { tripid, itemid } = req.params
+
+        return TripService.getPackingItemById (db, itemid)
+        .then(item => {
+            if (!item) {
+                return res.status(404).send(`Please request a valid Packing Item id.`)
+            }
+            return TripService.deletePackingItem (db, itemid)
+                .then(data => {
+                    logger.info(`flight id ${itemid} was deleted.`)
+                    return res.status(204).end()
+                })
+                .catch(next)
+        })
+        .catch(next)
+    })
 
 
 

@@ -65,6 +65,16 @@ const TripService = {
             })
     },
 
+    addPackingItem (knex, newItem) {
+        return knex
+            .from('packing_list')
+            .insert(newItem)
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+    },
+
     serializeFlight (flight) {
         return {
             id: flight.id,
@@ -93,6 +103,7 @@ const TripService = {
             id: item.id,
             item_name: xss(item.item_name),  
             list_notes: xss(item.list_notes),
+            checked: item.checked,
             trip_id: item.trip_id
         }
     },
@@ -116,6 +127,14 @@ const TripService = {
         return knex
             .select('*')
             .from('destinations')
+            .where('id', id)
+            .first()
+    },
+
+    getPackingItemById (knex, id) {
+        return knex
+            .select('*')
+            .from('packing_list')
             .where('id', id)
             .first()
     },
@@ -173,6 +192,13 @@ const TripService = {
     deleteDestination (knex, id) {
         return knex
             .from('destinations')
+            .where('id', id)
+            .delete()
+    },
+
+    deletePackingItem (knex, id) {
+        return knex
+            .from('packing_list')
             .where('id', id)
             .delete()
     },
