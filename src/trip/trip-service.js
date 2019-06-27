@@ -15,8 +15,7 @@ const TripService = {
             trip_name: xss(trip.trip_name),
             city: xss(trip.city),
             start_date: trip.start_date,
-            end_date: trip.end_date,
-            notes: xss(trip.notes)
+            end_date: trip.end_date
         }
     },
     
@@ -108,10 +107,10 @@ const TripService = {
         }
     },
 
-    getTrip (knex, trip_id) {
+    getTrip (knex, id) {
         return knex
             .from('trip')
-            .where('trip_id', trip_id)
+            .where('id', id)
             .first()
     },
 
@@ -174,6 +173,17 @@ const TripService = {
     updateDestination (knex, id, newData) {
         return knex
             .from('destinations')
+            .where('id', id)
+            .update(newData)
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+    },
+
+    updateTrip (knex, id, newData) {
+        return knex
+            .from('trip')
             .where('id', id)
             .update(newData)
             .returning('*')

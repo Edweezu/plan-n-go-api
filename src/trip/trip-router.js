@@ -33,7 +33,7 @@ TripRouter
         //
         let db = req.app.get('db')
 
-        const { city, trip_name, start_date, end_date, notes } = req.body
+        const { city, trip_name, start_date, end_date } = req.body
 
         const newTrip = { 
             city,
@@ -49,7 +49,6 @@ TripRouter
 
 
         newTrip.trip_name = trip_name
-        newTrip.notes = notes
         newTrip.user_id = req.user.id
 
         console.log('new trippp', newTrip)
@@ -102,6 +101,33 @@ TripRouter
     })
     .patch(bodyParser, (req, res, next) => {
         //when you click edit on trip dashboard
+        let db = req.app.get('db')
+        const { id, trip_name, city, start_date, end_date } = req.body
+
+        const updatedTrip = {
+            trip_name,
+            city,
+            start_date,
+            end_date
+        }
+
+        for (const [key, value] of Object.entries(updatedTrip))
+        if (value == null)
+        return res.status(400).json({
+            error: `Missing '${key}' in request body`
+        })
+
+        updatedTrip.id = id
+    
+
+        console.log('updated tripppp', updatedTrip)
+       
+        return TripService.updateTrip(db, id, updatedTrip)
+            .then(trip => {
+                console.log('server trippp', trip)
+                return res.status(204).end()
+            })
+            .catch(next)
     })
 
 TripRouter

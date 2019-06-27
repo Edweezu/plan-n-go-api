@@ -1,9 +1,9 @@
 TRUNCATE flights, destinations, list, trip RESTART IDENTITY CASCADE;
 
-INSERT INTO trip (trip_name, city, start_date, end_date, notes, user_id) VALUES 
-('Los Angeles', 'Los Angeles', '2019-06-22', '2019-06-25', 'Lets go LA!', 1),
-('San Francisco', 'San Francisco', '2019-07-20', '2019-07-24', 'San Francisco is the best!', 1),
-('New York', 'New York', '2019-08-15', '2019-08-21', 'Bring a jacket to NY', 2)
+INSERT INTO trip (trip_name, city, start_date, end_date, user_id) VALUES 
+('Los Angeles', 'Los Angeles', '2019-06-22', '2019-06-25', 1),
+('San Francisco', 'San Francisco', '2019-07-20', '2019-07-24', 1),
+('New York', 'New York', '2019-08-15', '2019-08-21', 2)
 ;
 
 INSERT INTO flights (airline, flight_num, depart_date, depart_time, seats, flight_notes, trip_id) VALUES 
