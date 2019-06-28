@@ -249,10 +249,10 @@ TripRouter
         updatedFlight.trip_id = trip_id
 
         if (depart_time === '') {
-            newFlight.depart_time = null
+            updatedFlight.depart_time = null
         }
         if (flight_num === '') {
-            newFlight.flight_num = null
+            updatedFlight.flight_num = null
         }
 
         console.log('updated flighttt', updatedFlight)
