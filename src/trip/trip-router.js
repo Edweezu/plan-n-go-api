@@ -150,7 +150,7 @@ TripRouter
             let db = req.app.get('db')
             let { tripid } = req.params
 
-            const { airline, flight_num, depart_date, depart_time, seats, flight_notes } = req.body
+            let { airline, flight_num, depart_date, depart_time, seats, flight_notes } = req.body
 
             const newFlight = { 
                 airline,
@@ -163,14 +163,18 @@ TripRouter
                 error: `Missing '${key}' in request body`
             })
 
+            console.log('flight numm', flight_num)
+            console.log('depart_time', depart_time)
             newFlight.flight_num = flight_num
             newFlight.depart_time = depart_time
             newFlight.seats = seats
             newFlight.flight_notes = flight_notes
             newFlight.trip_id = tripid
 
-            if (depart_time || flight_num == '') {
+            if (depart_time === '') {
                 newFlight.depart_time = null
+            }
+            if (flight_num === '') {
                 newFlight.flight_num = null
             }
 
@@ -244,9 +248,11 @@ TripRouter
         updatedFlight.flight_notes = flight_notes
         updatedFlight.trip_id = trip_id
 
-        if (depart_time || flight_num == '') {
-            updatedFlight.depart_time = null
-            updatedFlight.flight_num = null
+        if (depart_time === '') {
+            newFlight.depart_time = null
+        }
+        if (flight_num === '') {
+            newFlight.flight_num = null
         }
 
         console.log('updated flighttt', updatedFlight)
