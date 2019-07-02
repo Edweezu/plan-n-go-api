@@ -12,7 +12,10 @@ UsersRouter
     .route('/login')
     .post(jsonParser, (req, res, next) => {
         const { username, password } = req.body
-        const loginUser = { username, password }
+        const loginUser = { 
+          username: username.toLowerCase(),
+          password: password
+        }
         const db = req.app.get('db')
 
         for(const [key, value] of Object.entries(loginUser)) {
