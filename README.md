@@ -1,27 +1,43 @@
-#Express Boilerplate!
+# Plan-n-Go
 
-This is a boilerplate project used for starting new projects!
+Often times, getting started and planning a trip is the most stressful part of the process. Plan-n-Go helps simplify the experience by keeping all trip details in one spot. Users can create detailed travel itineraries and manage their packing list with ease. 
 
-## Set up
+## Demo
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+- Live Preview can be found at : https://plan-n-go-app.now.sh/
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
 
-## Scripts
+## Client Side Github Repo
 
-Start the application `npm start`
+- https://github.com/Edweezu/plan-n-go-client
 
-Start nodemon for the application `npm run dev`
 
-Run the tests `npm test`
+## Screenshots
 
-## Deploying
+|  Landing Page  | Create Account |  Login |  
+| -- | -- | -- |
+| <img src="./readme-images/landing-page.jpg" alt="landing-page" width="600"/> | <img src="./readme-images/create-account.jpg" alt="create-account" width="600"/> |  <img src="./readme-images/login.jpg" alt="login" width="600"/>
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
 
+|  Trips Dashboard  |  Trips Detail  |  Add Trip  |
+| -- | -- | -- |
+| <img src="./readme-images/trips-dashboard.jpg" alt="dashboard" width="600"/> | <img src="./readme-images/trip-detail.jpg" alt="trip detail" width="600"/> | <img src="./readme-images/add-trip-form.jpg" alt="add trip" width="600"/>
+
+
+## Technologies Used
+  - Javascript
+  - CSS3
+  - React
+  - Node
+  - Express
+  - PostgreSQL
+  - Mocha
+  - Chai
+
+
+## Development RoadMap (v2)
+ - Helpful Menu Popups for Account Creation & POST routes in order to better guide the user
+ - Nav links when logged in that scroll to each specific section
+ - Trip Notes Component
+ - Packing List Search Bar
+ - Packing List Overflow Management 
