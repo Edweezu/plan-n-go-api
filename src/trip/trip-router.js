@@ -17,8 +17,6 @@ TripRouter
     .all(requireAuth)
     .get((req, res) => {
         let db = req.app.get('db')
-
-        console.log('reqqqq', req.user)
         
         return TripService.getAllTrips(db, req.user.id)
             .then(trips => {
@@ -29,8 +27,7 @@ TripRouter
 
     })
     .post(bodyParser, (req, res, next) => {
-        //when you add a new trip on trip dashboard
-        //
+        //adding a new trip in Dashboard Component
         let db = req.app.get('db')
 
         const { city, trip_name, start_date, end_date } = req.body
@@ -47,15 +44,11 @@ TripRouter
             error: `Missing '${key}' in request body`
           })
 
-
         newTrip.trip_name = trip_name
         newTrip.user_id = req.user.id
 
-        console.log('new trippp', newTrip)
-
         return TripService.addTrip (db, newTrip)
             .then(trip => {
-                console.log('server trippp', trip)
                 return res.status(201)
                     .location(path.posix.join(req.originalUrl, `/${trip.id}`))
                     .json(TripService.serializeTrip(trip))
@@ -96,11 +89,9 @@ TripRouter
                     .catch(next)
             })
             .catch(next)
-
-
     })
     .patch(bodyParser, (req, res, next) => {
-        //when you click edit on trip dashboard
+        //Edit on Trip Dashboard
         let db = req.app.get('db')
         const { id, trip_name, city, start_date, end_date } = req.body
 
@@ -118,13 +109,9 @@ TripRouter
         })
 
         updatedTrip.id = id
-    
-
-        console.log('updated tripppp', updatedTrip)
        
         return TripService.updateTrip(db, id, updatedTrip)
             .then(trip => {
-                console.log('server trippp', trip)
                 return res.status(204).end()
             })
             .catch(next)
@@ -145,11 +132,8 @@ TripRouter
             })
     })
     .post(bodyParser, (req, res, next) => {
-        //adding a flight to the list and db
-            //take the tripId from this.props.params
             let db = req.app.get('db')
             let { tripid } = req.params
-
             let { airline, flight_num, depart_date, depart_time, seats, flight_notes } = req.body
 
             const newFlight = { 
@@ -163,8 +147,6 @@ TripRouter
                 error: `Missing '${key}' in request body`
             })
 
-            console.log('flight numm', flight_num)
-            console.log('depart_time', depart_time)
             newFlight.flight_num = flight_num
             newFlight.depart_time = depart_time
             newFlight.seats = seats
@@ -178,17 +160,13 @@ TripRouter
                 newFlight.flight_num = null
             }
 
-            console.log('new flightt', newFlight)
-
             return TripService.addFlight (db, newFlight)
                 .then(flight => {
-                    console.log('server flight', flight)
                     return res.status(201)
                         .location(path.posix.join(req.originalUrl, `/${flight.id}`))
                         .json(TripService.serializeFlight(flight))
                 })
                 .catch(next)
-
     })
 
 TripRouter
@@ -203,11 +181,8 @@ TripRouter
                 res.json(TripService.serializeFlight(flight))
             })
             .catch(next)
-
     })
     .delete((req, res, next) => {
-        //delete specific trip on list
-        //get flightId from the key
         let db = req.app.get('db')
         const { tripid, flightid } = req.params
 
@@ -226,7 +201,6 @@ TripRouter
         .catch(next)
     })
     .patch(bodyParser, (req, res, next) => {
-        //edit
         let db = req.app.get('db')
         const { id, airline, flight_num, depart_date, depart_time, seats, flight_notes, trip_id } = req.body
 
@@ -254,12 +228,9 @@ TripRouter
         if (flight_num === '') {
             updatedFlight.flight_num = null
         }
-
-        console.log('updated flighttt', updatedFlight)
        
         return TripService.updateFlight(db, id, updatedFlight)
             .then(flight => {
-                console.log('server flighttt', flight)
                 return res.status(204).end()
             })
             .catch(next)
@@ -277,11 +248,8 @@ TripRouter
                 res.json(TripService.serializeDestination(destination))
             })
             .catch(next)
-
     })
     .delete((req, res, next) => {
-        //delete specific trip on list
-        //get destinationid from the key
         let db = req.app.get('db')
         const { tripid, destinationid } = req.params
 
@@ -300,7 +268,6 @@ TripRouter
         .catch(next)
     })
     .patch(bodyParser, (req, res, next) => {
-        //edit
         let db = req.app.get('db')
         const { id, destination_name, destination_date, address, destination_notes, trip_id } = req.body
 
@@ -319,12 +286,9 @@ TripRouter
         updatedDestination.address = address
         updatedDestination.destination_notes = destination_notes
         updatedDestination.trip_id = trip_id
-
-        console.log('updated destinationnn', updatedDestination)
        
         return TripService.updateDestination(db, id, updatedDestination)
             .then(destination => {
-                console.log('server destinationnn', destination)
                 return res.status(204).end()
             })
             .catch(next)
@@ -365,11 +329,8 @@ TripRouter
         newDestination.destination_notes = destination_notes
         newDestination.trip_id = tripid
 
-        console.log('new Destinationnn', newDestination)
-
         return TripService.addDestination (db, newDestination)
             .then(destination => {
-                console.log('server destination', destination)
                 return res.status(201)
                     .location(path.posix.join(req.originalUrl, `/${destination.id}`))
                     .json(TripService.serializeDestination(destination))
@@ -411,11 +372,8 @@ TripRouter
         newItem.checked = checked
         newItem.trip_id = tripid
 
-        console.log('new packing itemmmm', newItem)
-
         return TripService.addPackingItem (db, newItem)
             .then(item => {
-                console.log('server destination', item)
                 return res.status(201)
                     .location(path.posix.join(req.originalUrl, `/${item.id}`))
                     .json(TripService.serializeList(item))

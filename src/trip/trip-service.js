@@ -6,7 +6,6 @@ const TripService = {
             .select('*')
             .from('trip')
             .where('user_id', user_id)
-
     },
 
     serializeTrip (trip) {
@@ -97,6 +96,7 @@ const TripService = {
             trip_id: destination.trip_id
         }
     },
+
     serializeList (item) {
         return {
             id: item.id,
@@ -212,7 +212,6 @@ const TripService = {
             .where('id', id)
             .delete()
     },
-
 
 }
 

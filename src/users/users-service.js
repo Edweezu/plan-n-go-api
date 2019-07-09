@@ -73,6 +73,7 @@ const UsersService = {
       username: xss(user.username)
     }
   },
+
 }
 
 module.exports = UsersService

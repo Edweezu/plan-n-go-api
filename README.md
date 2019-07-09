@@ -16,12 +16,12 @@ Often times, getting started and planning a trip is the most stressful part of t
 
 |  Landing Page  | Create Account |  Login |  
 | -- | -- | -- |
-| <img src="./readme-images/landing-page.jpg" alt="landing-page" width="600"/> | <img src="./readme-images/create-account.jpg" alt="create-account" width="600"/> |  <img src="./readme-images/login.jpg" alt="login" width="600"/>
+| <img src="./readme-images/landing-page.png" alt="landing-page" width="600"/> | <img src="./readme-images/create-account.png" alt="create-account" width="600"/> |  <img src="./readme-images/login.png" alt="login" width="600"/>
 
 
 |  Trips Dashboard  |  Trips Detail  |  Add Trip  |
 | -- | -- | -- |
-| <img src="./readme-images/trips-dashboard.jpg" alt="dashboard" width="600"/> | <img src="./readme-images/trip-detail.jpg" alt="trip detail" width="600"/> | <img src="./readme-images/add-trip-form.jpg" alt="add trip" width="600"/>
+| <img src="./readme-images/trips-dashboard.png" alt="dashboard" width="600"/> | <img src="./readme-images/trip-detail.png" alt="trip detail" width="600"/> | <img src="./readme-images/add-trip-form.png" alt="add trip" width="600"/>
 
 
 ## Technologies Used

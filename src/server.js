@@ -2,8 +2,6 @@ const app = require('./app')
 const knex = require('knex')
 const { PORT, DB_URL } = require('./config') 
 
-// const PORT = process.env.PORT || 8000
-
 let db = knex({
     client: 'pg',
     connection: DB_URL
