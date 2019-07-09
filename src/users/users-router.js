@@ -1,5 +1,3 @@
-//need get for intial app componentdidMount, gets all users in the db and sets it as the state
-//post
 const path = require('path')
 const express = require('express')
 const UsersRouter = express.Router()
